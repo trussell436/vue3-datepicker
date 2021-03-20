@@ -1,17 +1,14 @@
 <template>
   <div class="v3dp__datepicker">
-    <input
-      type="text"
-      readonly="readonly"
-      v-model="input"
-      v-bind="$attrs"
-      :placeholder="placeholder"
+    <component
+      :is="inputComponent"
+      :date="input"
       :disabled="disabled"
-      :tabindex="disabled ? -1 : 0"
+      :placeholder="placeholder"
       @blur="renderView()"
       @focus="renderView(initialView)"
-      @click="renderView(initialView)"
-    />
+      @click="renderView(initialView)"/>
+
     <year-picker
       v-show="viewShown === 'year'"
       v-model:pageDate="pageDate"
@@ -54,6 +51,7 @@ import { parse, isValid, setYear, lightFormat } from 'date-fns'
 import YearPicker from './YearPicker.vue'
 import MonthPicker from './MonthPicker.vue'
 import DayPicker from './DayPicker.vue'
+import InputTextBox from './DefaultInput.vue'
 
 const TIME_RESOLUTIONS = ['day', 'month', 'year']
 
@@ -62,6 +60,7 @@ export default defineComponent({
     YearPicker,
     MonthPicker,
     DayPicker,
+    InputTextBox
   },
   inheritAttrs: false,
   props: {
@@ -177,6 +176,14 @@ export default defineComponent({
       default: 'day',
       validate: (v: unknown) =>
         typeof v === 'string' && TIME_RESOLUTIONS.includes(v),
+    },
+    /**
+     * Custom input component
+     */
+    inputComponent: {
+      type: Object,
+      required: false,
+      default: InputTextBox
     }
   },
   emits: {

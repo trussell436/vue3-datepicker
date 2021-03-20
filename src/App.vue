@@ -1,12 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
+    <input type="text" :value="selected"/>
     <datepicker
       class="picker"
       v-model="selected"
       :locale="locale"
       :upperLimit="to"
       :lowerLimit="from"
+      :inputComponent="calendar"
     />
   </div>
   <div>
@@ -54,7 +56,8 @@
 
 <script>
 import Datepicker from './datepicker/Datepicker.vue'
-import { defineComponent } from 'vue'
+import CalendarButtonExample from './demo/CalendarButtonExample.vue'
+import { defineComponent, markRaw } from 'vue'
 import { enUS } from 'date-fns/locale'
 
 export default defineComponent({
@@ -69,6 +72,7 @@ export default defineComponent({
       to: null,
       yearSelected: null,
       monthSelected: null,
+      calendar: markRaw(CalendarButtonExample)
     }
   },
   computed: {

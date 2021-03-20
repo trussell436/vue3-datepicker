@@ -9,6 +9,7 @@
       :upperLimit="to"
       :lowerLimit="from"
       :inputComponent="calendar"
+      :disableWeekends="true"
     />
   </div>
   <div>

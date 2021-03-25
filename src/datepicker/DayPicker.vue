@@ -145,7 +145,7 @@ export default defineComponent({
       disabledDates?: { dates?: Date[] },
       disableWeekends?: Boolean
     ): boolean => {
-      if (disableWeekends) return !isWeekend(target);
+      if (disableWeekends && isWeekend(target)) return false
       if (disabledDates?.dates?.some(date => isSameDay(target, date))) return false
       if (!lower && !upper) return true
       if (lower && isBefore(target, startOfDay(lower))) return false
